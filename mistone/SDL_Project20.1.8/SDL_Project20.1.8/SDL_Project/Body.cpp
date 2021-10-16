@@ -121,22 +121,22 @@ void Body::Update(float deltaTime) {
 	pos += vel * deltaTime + 0.5f * accel * deltaTime * deltaTime;
 	vel += accel * deltaTime;
 
-	rotation += (360.0f * vel.x * deltaTime) / (2.0f * M_PI * imageSizeWorldCoords.x / 2.0f);
+	//rotation += (360.0f * vel.x * deltaTime) / (2.0f * M_PI * imageSizeWorldCoords.x / 2.0f);
 
 
-	if (pos.y - imageSizeWorldCoords.y < 0.0f) { /// Floor
+	if (pos.y - imageSizeWorldCoords.y < -6.4f) { /// Floor
 		vel.y *= -1.0f;
 	}
 
-	if (pos.x < 0.0f) { /// Left wall
+	if (pos.x < -14.3f) { /// Left wall
 		vel.x *= -1.0f;
 	}
 
-	if (pos.x + imageSizeWorldCoords.x > 30.0f) { ///Right wall
+	if (pos.x + imageSizeWorldCoords.x > 15.0f) { ///Right wall
 		vel.x *= -1.0f;
 	}
 
-	if (pos.y > 15.0) {
+	if (pos.y > 6.5) {
 		vel.y *= -1.0f;
 	}
 
