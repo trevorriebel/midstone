@@ -36,7 +36,7 @@ Body::Body(Vec3 pos_, Vec3 vel_, Vec3 accel_, float mass_) {
 	mass = mass_;
 	image = nullptr;
 	rotation = 0.0;
-
+    radius = 1.2f;
 }
 
 Body::~Body() {
