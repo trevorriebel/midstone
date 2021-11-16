@@ -34,6 +34,9 @@ public:
 	bool BallCaptured() { return caught; }
 	void Captured() { caught = true; }
 	void letGo() { caught = false; }
+	void SetAccel(const Vec3& accel_) {
+		accel = accel_;
+	}
 
 
 	void setImage(SDL_Surface* image_) { image = image_; }
