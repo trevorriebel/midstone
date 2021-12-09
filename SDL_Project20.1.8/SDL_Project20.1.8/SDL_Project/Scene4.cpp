@@ -12,23 +12,23 @@ int direction = 1;
 
 Scene4::Scene4(SDL_Window* sdlWindow_){
 	
-	window = sdlWindow_;
-	renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
-	
-		// Timer
-		gameObjects[0] = new Body(Vec3(0, 7.3f, 0.0f),
-							    Vec3(0.0f, 0.0f, 0.0f), 
-								Vec3(0.0f, 0.0f, 0.0f), 1.0f);
+	//window = sdlWindow_;
+	//renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+	//
+	//	// Timer
+	//	gameObjects[0] = new Body(Vec3(0, 7.3f, 0.0f),
+	//						    Vec3(0.0f, 0.0f, 0.0f), 
+	//							Vec3(0.0f, 0.0f, 0.0f), 1.0f);
 
-		// Coin
-		gameObjects[1] = new Body(Vec3(0.0f, 5.0f, 0.0f),
-								Vec3(0.0f, 0.0f, 0.0f),
-								Vec3(0.0f, 0.0f, 0.0f), 1.0f);
+	//	// Coin
+	//	gameObjects[1] = new Body(Vec3(0.0f, 5.0f, 0.0f),
+	//							Vec3(0.0f, 0.0f, 0.0f),
+	//							Vec3(0.0f, 0.0f, 0.0f), 1.0f);
 
-		// Player
-		gameObjects[2] = new Body(Vec3(0.0f, -3.0f, 0.0f),
-								Vec3(0.0f, 0.0f, 0.0f),
-								Vec3(0.0f, 0.0f, 0.0f), 1.0f);
+	//	// Player
+	//	gameObjects[2] = new Body(Vec3(0.0f, -3.0f, 0.0f),
+	//							Vec3(0.0f, 0.0f, 0.0f),
+	//							Vec3(0.0f, 0.0f, 0.0f), 1.0f);
 	
 }
 
