@@ -12,23 +12,23 @@ int direction = 1;
 
 Scene4::Scene4(SDL_Window* sdlWindow_){
 	
-	//window = sdlWindow_;
-	//renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
-	//
-	//	// Timer
-	//	gameObjects[0] = new Body(Vec3(0, 7.3f, 0.0f),
-	//						    Vec3(0.0f, 0.0f, 0.0f), 
-	//							Vec3(0.0f, 0.0f, 0.0f), 1.0f);
+	window = sdlWindow_;
+	renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+	
+		// Timer
+		gameObjects[0] = new Body(Vec3(0, 7.3f, 0.0f),
+							    Vec3(0.0f, 0.0f, 0.0f), 
+								Vec3(0.0f, 0.0f, 0.0f), 1.0f);
 
-	//	// Coin
-	//	gameObjects[1] = new Body(Vec3(0.0f, 5.0f, 0.0f),
-	//							Vec3(0.0f, 0.0f, 0.0f),
-	//							Vec3(0.0f, 0.0f, 0.0f), 1.0f);
+		// Coin
+		gameObjects[1] = new Body(Vec3(0.0f, 5.0f, 0.0f),
+								Vec3(0.0f, 0.0f, 0.0f),
+								Vec3(0.0f, 0.0f, 0.0f), 1.0f);
 
-	//	// Player
-	//	gameObjects[2] = new Body(Vec3(0.0f, -3.0f, 0.0f),
-	//							Vec3(0.0f, 0.0f, 0.0f),
-	//							Vec3(0.0f, 0.0f, 0.0f), 1.0f);
+		// Player
+		gameObjects[2] = new Body(Vec3(0.0f, -3.0f, 0.0f),
+								Vec3(0.0f, 0.0f, 0.0f),
+								Vec3(0.0f, 0.0f, 0.0f), 1.0f);
 	
 }
 
@@ -89,6 +89,7 @@ void Scene4::OnDestroy() {
 
 void Scene4::Update(const float deltaTime) {
 
+	gameObjects[0]->setVel(Vec3(-2.0f, 0.0f, 0.0f));
 	for(int i = 0; i < NUM_OBJECTS; i = i + 1){
 		gameObjects[i]->Update(deltaTime);
 	}
@@ -98,6 +99,7 @@ void Scene4::Update(const float deltaTime) {
 	float radius = gameObjects[1]->getRadius();
 	if (distance < radius) { // Coin grab
 		gameObjects[1]->setPos(Vec3(r.rand(-10.f, 10.f), r.rand(-5.f, 5.f), 0.0f));
+		gameObjects[0]->setPos(Vec3(0, 7.3f, 0.0f));
 		score++;
 		printf("Score = %d\n", score);
 	}
