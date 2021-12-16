@@ -89,8 +89,21 @@ void Scene4::OnDestroy() {
 }
 
 void Scene4::Update(const float deltaTime) {
+	Vec3 timerPos = gameObjects[0]->getPos(); // Get timer position
+	if (score < 0) {
+		gameObjects[0]->setPos(Vec3(0, 7.3f, 0.0f));
+		gameObjects[2]->setPos(Vec3(0, -3.0f, 0.0f));
+		gameObjects[0]->setVel(Vec3(0.0f, 0.0f, 0.0f)); // Timer restart
+
+	}
+	if (score == 0) {
+		gameObjects[1]->setPos(Vec3(0, 5.0f, 0.0f));
+	}
 	if (score > 0) { // If the game has started
-		gameObjects[0]->setVel(Vec3(-2.0f, 0.0f, 0.0f)); // Timer movement
+		gameObjects[0]->setVel(Vec3(-4.0f, 0.0f, 0.0f)); // Timer movement
+		if (timerPos.x < -30.0f) { // If the time is up
+			score = -1;
+		}
 	}
 	for(int i = 0; i < NUM_OBJECTS; i = i + 1){
 		gameObjects[i]->Update(deltaTime);
@@ -109,43 +122,58 @@ void Scene4::Update(const float deltaTime) {
 
 void Scene4::HandleEvents(const SDL_Event& sdlEvent) {
 
-	if (sdlEvent.type == SDL_KEYDOWN) { // Up, left, down, right movement
-		switch (sdlEvent.key.keysym.scancode) {
-		case SDL_SCANCODE_W: //Go up
-			gameObjects[2]->ApplyForce(Vec3(0.0f, 10.0f, 0.0f));
-			break;
-		case SDL_SCANCODE_A: //Go left
-			gameObjects[2]->ApplyForce(Vec3(-10.0f, 0.0f, 0.0f));
-			direction = 2;
-			break;
-		case SDL_SCANCODE_S: //Go down
-			gameObjects[2]->ApplyForce(Vec3(0.0f, -10.0f, 0.0f));
-			break;
-		case SDL_SCANCODE_D: //Go right
-			gameObjects[2]->ApplyForce(Vec3(10.0f, 0.0f, 0.0f));
-			direction = 1;
-			break;
+	if (score > -1) { // If the game is being played
+		if (sdlEvent.type == SDL_KEYDOWN) { // Up, left, down, right movement
+			switch (sdlEvent.key.keysym.scancode) {
+			case SDL_SCANCODE_W: //Go up
+				gameObjects[2]->ApplyForce(Vec3(0.0f, 10.0f, 0.0f));
+				break;
+			case SDL_SCANCODE_A: //Go left
+				gameObjects[2]->ApplyForce(Vec3(-10.0f, 0.0f, 0.0f));
+				direction = 2;
+				break;
+			case SDL_SCANCODE_S: //Go down
+				gameObjects[2]->ApplyForce(Vec3(0.0f, -10.0f, 0.0f));
+				break;
+			case SDL_SCANCODE_D: //Go right
+				gameObjects[2]->ApplyForce(Vec3(10.0f, 0.0f, 0.0f));
+				direction = 1;
+				break;
+			}
+		}
+		else if (sdlEvent.type == SDL_KEYUP) { //Undo the forces
+			switch (sdlEvent.key.keysym.scancode) {
+			case SDL_SCANCODE_W:
+				gameObjects[2]->SetAccel(Vec3(0.0f, -9.81f, 0.0f));
+				gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
+				break;
+			case SDL_SCANCODE_A:
+				gameObjects[2]->SetAccel(Vec3(0.0f, -9.81f, 0.0f));
+				gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
+				break;
+			case SDL_SCANCODE_S:
+				gameObjects[2]->SetAccel(Vec3(0.0f, -9.81f, 0.0f));
+				gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
+				break;
+			case SDL_SCANCODE_D:
+				gameObjects[2]->SetAccel(Vec3(0.0f, -9.81f, 0.0f));
+				gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
+				break;
+			}
 		}
 	}
-	else if (sdlEvent.type == SDL_KEYUP) { //Undo the forces
-		switch (sdlEvent.key.keysym.scancode) {
-		case SDL_SCANCODE_W:
-			gameObjects[2]->SetAccel(Vec3(0.0f, -9.81f, 0.0f));
-			gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
-			break;
-		case SDL_SCANCODE_A:
-			gameObjects[2]->SetAccel(Vec3(0.0f, -9.81f, 0.0f));
-			gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
-			break;
-		case SDL_SCANCODE_S:
-			gameObjects[2]->SetAccel(Vec3(0.0f, -9.81f, 0.0f));
-			gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
-			break;
-		case SDL_SCANCODE_D:
-			gameObjects[2]->SetAccel(Vec3(0.0f, -9.81f, 0.0f));
-			gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
-			break;
+	else if (score == -1) { // If the game has ended
+		gameObjects[2]->SetAccel(Vec3(0.0f, 0.0f, 0.0f));
+		gameObjects[2]->setVel(Vec3(0.0f, 0.0f, 0.0f));
+		gameObjects[2]->setPos(Vec3(0.0f, -3.0f, 0.0f));
+		if (sdlEvent.type == SDL_KEYDOWN) {
+			switch (sdlEvent.key.keysym.scancode) {
+			case SDL_SCANCODE_R: //Restart
+				score = 0;
+				break;
+			}
 		}
+
 	}
 }
 
